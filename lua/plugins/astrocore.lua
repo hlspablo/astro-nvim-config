@@ -13,7 +13,7 @@ return {
       large_buf = { size = 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics_mode = 2, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -40,19 +40,32 @@ return {
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
-      -- first key is the mode
+      v = {
+        -- move text up and down
+        ["<A-k>"] = { ":m '<-2<CR>gv=gv", desc = "Move line up" },
+        ["<A-j>"] = { ":m .+1<CR>==", desc = "Move line down" },
+      },
+      i = {
+        -- move text up and down
+        ["<A-j>"] = { ":m .+1<CR>==", desc = "Move line down" },
+        ["<A-k>"] = { ":m .-2<CR>==", desc = "Move line up" },
+      },
       n = {
         -- second key is the lefthand side of the map
 
         -- navigate buffer tabs with `H` and `L`
-        -- L = {
-        --   function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-        --   desc = "Next buffer",
-        -- },
-        -- H = {
-        --   function() require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-        --   desc = "Previous buffer",
-        -- },
+        ["<Tab>"] = {
+          function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+          desc = "Next buffer",
+        },
+        ["<S-Tab>"] = {
+          function() require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+          desc = "Previous buffer",
+        },
+
+        -- move text up and down
+        ["<A-j>"] = { ":m .+1<CR>==", desc = "Move line down" },
+        ["<A-k>"] = { ":m .-2<CR>==", desc = "Move line up" },
 
         -- mappings seen under group name "Buffer"
         ["<Leader>bD"] = {

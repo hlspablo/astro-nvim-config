@@ -15,5 +15,10 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+-- disable swap files
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
+
 require "lazy_setup"
 require "polish"
